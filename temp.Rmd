@@ -1,0 +1,77 @@
+---
+title: "Distributions Plot module"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include = F}
+library(iatlas.modules)
+temp1 <-  tools::Rd2HTML(
+            gbRd::Rd_fun("distributions_plot_server"),
+            out = tempfile("docs")
+        )
+
+
+content1 <- readr::read_file(temp1)
+file.remove(temp1)
+
+temp2 <-  tools::Rd2HTML(
+            gbRd::Rd_fun("distributions_plot_ui"),
+            out = tempfile("docs")
+        )
+
+
+content2 <- readr::read_file(temp2)
+file.remove(temp2)
+```
+
+```{r, echo=F}
+knitr::asis_output(htmltools::htmlPreserve(content1))
+knitr::asis_output(htmltools::htmlPreserve(content2))
+```
+
+```{r}
+library(magrittr)
+shiny::shinyApp(
+
+  ui = shiny::fluidPage(
+    iatlas.modules::distributions_plot_ui("distplot4", title = "Example 4")
+  ),
+
+  server = function(input, output) {
+    iatlas.modules::distributions_plot_server(
+      "distplot4",
+      plot_data_function <- shiny::reactive({
+        function(.feature){
+          iatlas.modules2::pcawg_immune_subtype_cohort_obj$get_gene_values(entrez = as.integer(.feature)) %>%
+            dplyr::select(
+              "sample" = "sample_name",
+              "group" = "group_short_name",
+              "feature" = "hgnc",
+              "feature_value" = "rna_seq_expr",
+              "group_description" = "group_characteristics",
+              "color" = "group_color"
+            )
+        }
+      }),
+      features <- shiny::reactive({
+        iatlas.api.client::query_immunomodulators() %>%
+          dplyr::select(
+            "feature_name" = "entrez",
+            "feature_display" = "hgnc",
+            "Gene Family" = "gene_family",
+            "Gene Function" = "gene_function",
+            "Immune Checkpoint" = "immune_checkpoint",
+            "Super Category" = "super_category"
+          )
+      }),
+      drilldown = shiny::reactive(T),
+      distplot_xlab = shiny::reactive("Immune_Subtype"),
+      scale_method_default = shiny::reactive("Log10"),
+      feature_default = shiny::reactive("Petal.Length")
+    )
+  },
+
+  options = list(height = 2000)
+)
+```
