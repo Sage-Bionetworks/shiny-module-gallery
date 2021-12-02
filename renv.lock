@@ -191,13 +191,6 @@
       "Repository": "CRAN",
       "Hash": "bb0eec2fe32e88d9e2836c2f73ea2077"
     },
-    "evaluate": {
-      "Package": "evaluate",
-      "Version": "0.14",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "ec8ca05cffcc70569eaaad8469d2a3a7"
-    },
     "fansi": {
       "Package": "fansi",
       "Version": "0.5.0",
@@ -295,13 +288,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "ac5c6baf7822ce8732b343f14c072c4d"
-    },
-    "highr": {
-      "Package": "highr",
-      "Version": "0.9",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "8eb36c8125038e648e5d111c0d7b2ed4"
     },
     "hms": {
       "Package": "hms",
@@ -403,13 +389,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "98138e0994d41508c7a6b84a0600cfcb"
-    },
-    "knitr": {
-      "Package": "knitr",
-      "Version": "1.36",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "46344b93f8854714cdf476433a59ed10"
     },
     "labeling": {
       "Package": "labeling",
@@ -579,13 +558,6 @@
       "Repository": "CRAN",
       "Hash": "0879f5388fe6e4d56d7ef0b7ccb031e5"
     },
-    "rmarkdown": {
-      "Package": "rmarkdown",
-      "Version": "2.11",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "320017b52d05a943981272b295750388"
-    },
     "sass": {
       "Package": "sass",
       "Version": "0.4.0",
@@ -676,13 +648,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "7243004a708d06d4716717fa1ff5b2fe"
-    },
-    "tinytex": {
-      "Package": "tinytex",
-      "Version": "0.34",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "043daa786f4d254f0031534150e28d42"
     },
     "triebeard": {
       "Package": "triebeard",
