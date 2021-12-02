@@ -2,3 +2,4 @@
 ^renv\.lock$
 ^Shiny\.Module\.Gallery\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$

@@ -8,9 +8,33 @@ Authors@R:
            email = "first.last@example.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Imports: 
+    dplyr (>= 1.0),
+    gbRd,
+    iatlas.api.client,
+    iatlas.modules,
+    iatlas.modules2,
+    magrittr (>= 2.0),
+    markdown (>= 1.0),
+    plotly (>= 4.0),
+    purrr,
+    readr (>= 1.0),
+    rlang (>= 0.4),
+    shiny (>= 1.6),
+    shinydashboard (>= 0.7),
+    stringr (>= 1.0),
+    tibble (>= 3.0),
+    tidyr (>= 1.0),
+    tidyselect (>= 1.0),
+    utils
+URL: https://github.com/CRI-iAtlas/iatlas.modules
+BugReports: https://github.com/CRI-iAtlas/iatlas.modules/issues
+Remotes:
+    CRI-iAtlas/iatlas.api.client@main,
+    CRI-iAtlas/iatlas.modules@master,
+    CRI-iAtlas/iatlas.modules2@master,
