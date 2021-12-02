@@ -8,10 +8,10 @@ example_server <- function(
     function(input, output, session) {
       ns <- session$ns
 
-      output$ui_text <- renderText(readr::read_file(ui_file))
+      output$ui_text <- shiny::renderText(readr::read_file(ui_file))
       output$ui_element <- shiny::renderUI(source(ui_file, echo = F, local = T))
 
-      output$server_text <- renderText(readr::read_file(server_file))
+      output$server_text <- shiny::renderText(readr::read_file(server_file))
       source(server_file, echo = F, local = T)
     }
 )}
