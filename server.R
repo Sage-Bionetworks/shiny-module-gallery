@@ -29,8 +29,8 @@ function(input, output) {
 
     example_server(
         "distributions_plot_1",
-        "../inst/distributions_plot_server1.R",
-        "../inst/distributions_plot_ui1.R"
+        "inst/distributions_plot_server1.R",
+        "inst/distributions_plot_ui1.R"
     )
 
 }
