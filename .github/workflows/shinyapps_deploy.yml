@@ -11,10 +11,13 @@ on:
 
 jobs:
   shiny-deploy:
-    runs-on: rocker/rstudio
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.PAT }}
     steps:
+      - name: Install libcurl
+        run: sudo apt-get install -y curl
+ 
       - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-pandoc@v1
