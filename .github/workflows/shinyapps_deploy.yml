@@ -34,6 +34,13 @@ jobs:
 
       - name: Authorize and deploy app
         run: |
+          branch<-"${{env.GITHUB_REF_NAME}}"
+          repo <-"${{env.GITHUB_REPOSITORY}}"
+          appName<-strsplit(repo, "/")[[1]][2]
+          if (!startsWith(branch, "release")) {
+             appName = paste(appName, "staging", sep="-")
+          }
+          print(appName)
           rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
-          rsconnect::deployApp()
+          rsconnect::deployApp(appName = appName)
         shell: Rscript {0}
