@@ -25,17 +25,6 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
         with:
           use-public-rspm: true
-
-      - name: deleteme
-        run: |
-          branch<-Sys.getenv("GITHUB_REF_NAME")
-          repo<-Sys.getenv("GITHUB_REPOSITORY")
-          appName<-strsplit(repo, "/")[[1]][2]
-          if (!startsWith(branch, "release")) {
-             appName = paste(appName, "staging", sep="-")
-          }
-          print(appName)
-        shell: Rscript {0}
         
       - uses: r-lib/actions/setup-renv@v1
 
@@ -45,13 +34,12 @@ jobs:
 
       - name: Authorize and deploy app
         run: |
-          branch<-"${{ env.GITHUB_REF_NAME }}"
-          repo <-"${{ env.GITHUB_REPOSITORY }}"
+          branch<-Sys.getenv("GITHUB_REF_NAME")
+          repo<-Sys.getenv("GITHUB_REPOSITORY")
           appName<-strsplit(repo, "/")[[1]][2]
           if (!startsWith(branch, "release")) {
              appName = paste(appName, "staging", sep="-")
           }
-          print(appName)
           rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
           rsconnect::deployApp(appName = appName)
         shell: Rscript {0}
