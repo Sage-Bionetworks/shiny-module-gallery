@@ -11,6 +11,7 @@ iatlas.modules::distributions_plot_server(
           names_to = "feature",
           values_to = "feature_value"
         ) %>%
+        dplyr::filter(.data$feature == .feature) %>%
         dplyr::rename("group" = "Species") %>%
         dplyr::inner_join(
           dplyr::tribble(
