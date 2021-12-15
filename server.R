@@ -17,4 +17,19 @@ function(input, output) {
             "inst/distributions_plot_ui2.R"
         )
     )
+
+    module_server(
+        id = "barplot",
+        server_function_name = "barplot_server",
+        ui_function_name = "barplot_ui",
+        example_module_ids = c("example_1", "example_2"),
+        example_server_files = c(
+            "inst/barplot_server1.R",
+            "inst/barplot_server2.R"
+        ),
+        example_ui_files = c(
+            "inst/barplot_ui1.R",
+            "inst/barplot_ui2.R"
+        )
+    )
 }
