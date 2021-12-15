@@ -26,19 +26,11 @@ shinydashboard::dashboardPage(
     ),
     shinydashboard::dashboardBody(
         shinydashboard::tabItems(
-            shinydashboard::tabItem(
-                tabName = "distplot",
-                shiny::fluidRow(
-                    shinydashboard::box(
-                        shiny::htmlOutput("text1"),
-                        title = "Server Documentation"
-                    ),
-                    shinydashboard::box(
-                        shiny::htmlOutput("text2"),
-                        title = "UI Documentation"
-                    )
-                ),
-                example_ui("distributions_plot_1")
+            module_ui(
+                id = "distributions_plot",
+                tab_name = "distplot",
+                example_module_ids = c("example_1", "example_2"),
+                example_names = c("Example1", "Example2")
             ),
             shinydashboard::tabItem(
                 tabName = "barchart",
