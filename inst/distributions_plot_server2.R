@@ -1,5 +1,5 @@
 iatlas.modules::distributions_plot_server(
-  "distplot1",
+  "distplot2",
 
   plot_data_function = shiny::reactive(
     function(.feature){
@@ -25,10 +25,21 @@ iatlas.modules::distributions_plot_server(
           "group_description" = stringr::str_c("Iris Species: ", .data$group_name),
           "feature_display" = .data$feature_name
         ) %>%
-        dplyr::select("sample_name", "feature_name", "feature_display", "feature_value", "group_name", "group_color", "group_description")
+        dplyr::select("sample_name", "feature_name", "feature_display", "feature_value", "group_name", "group_color", "group_description") %>%
+        dplyr::filter(.data$feature_name == .feature)
+
     }
   ),
 
+  features = shiny::reactive(
+    dplyr::tribble(
+      ~`Class 1`, ~feature_name,   ~`Class 2`, ~feature_display,
+      "Length",   "Sepal.Length",  "Sepal",     "Sepal Length",
+      "Width",    "Sepal.Width",   "Sepal",     "Sepal Width",
+      "Length",   "Petal.Length",  "Petal",     "Petal Length",
+      "Width",    "Petal.Width",   "Petal",     "Petal Width"
+    )
+  ),
 
   drilldown = shiny::reactive(T),
   distplot_xlab = shiny::reactive("Species")

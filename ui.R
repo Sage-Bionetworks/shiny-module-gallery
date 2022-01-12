@@ -5,12 +5,17 @@ shinydashboard::dashboardPage(
             shinydashboard::menuItem(
                 shinydashboard::menuSubItem(
                     text = "Distributions Plot",
-                    tabName = "distplot",
+                    tabName = "distributions_plot",
                     icon = shiny::icon("cog")
                 ),
                 shinydashboard::menuSubItem(
-                    text = "Barchart",
-                    tabName = "barchart",
+                    text = "Barplot",
+                    tabName = "barplot",
+                    icon = shiny::icon("cog")
+                ),
+                shinydashboard::menuSubItem(
+                    text = "Heatmap",
+                    tabName = "heatmap",
                     icon = shiny::icon("cog")
                 ),
                 text = "iAtlas Modules",
@@ -26,23 +31,23 @@ shinydashboard::dashboardPage(
     ),
     shinydashboard::dashboardBody(
         shinydashboard::tabItems(
-            shinydashboard::tabItem(
-                tabName = "distplot",
-                shiny::fluidRow(
-                    shinydashboard::box(
-                        shiny::htmlOutput("text1"),
-                        title = "Server Documentation"
-                    ),
-                    shinydashboard::box(
-                        shiny::htmlOutput("text2"),
-                        title = "UI Documentation"
-                    )
-                ),
-                example_ui("distributions_plot_1")
+            module_ui(
+                id = "distributions_plot",
+                tab_name = "distributions_plot",
+                example_module_ids = c("example_1", "example_2"),
+                example_names = c("Example1", "Example2")
             ),
-            shinydashboard::tabItem(
-                tabName = "barchart",
-                shiny::fluidRow()
+            module_ui(
+                id = "barplot",
+                tab_name = "barplot",
+                example_module_ids = c("example_1", "example_2"),
+                example_names = c("Example1", "Example2")
+            ),
+            module_ui(
+                id = "heatmap",
+                tab_name = "heatmap",
+                example_module_ids = c("example_1"),
+                example_names = c("Example1")
             )
         )
     )

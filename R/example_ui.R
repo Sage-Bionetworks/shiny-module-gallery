@@ -1,15 +1,9 @@
-example_ui <- function(id){
+example_ui <- function(id, example_name){
 
   ns <- shiny::NS(id)
 
-  shiny::tagList(
+  shinydashboard::box(
     shiny::fluidRow(
-      shinydashboard::box(
-        width = 12,
-        background = "green",
-        title = shiny::span(
-          shiny::strong("Example 1"), style = "font-size:24px")
-      ),
       shinydashboard::box(
         shiny::verbatimTextOutput(ns("server_text")),
         title = "Server Function Call"
@@ -25,7 +19,12 @@ example_ui <- function(id){
         width = 12,
         title = "Module Output"
       )
-    )
+    ),
+    width = 12,
+    title = example_name,
+    solidHeader = TRUE,
+    status = "success",
+    collapsible = TRUE
   )
 
 }
