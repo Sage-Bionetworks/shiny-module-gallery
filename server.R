@@ -32,4 +32,17 @@ function(input, output) {
             "inst/barplot_ui2.R"
         )
     )
+
+    module_server(
+        id = "heatmap",
+        server_function_name = "heatmap_server",
+        ui_function_name = "heatmap_ui",
+        example_module_ids = c("example_1"),
+        example_server_files = c(
+            "inst/heatmap_server1.R"
+        ),
+        example_ui_files = c(
+            "inst/heatmap_ui1.R"
+        )
+    )
 }

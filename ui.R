@@ -13,6 +13,11 @@ shinydashboard::dashboardPage(
                     tabName = "barplot",
                     icon = shiny::icon("cog")
                 ),
+                shinydashboard::menuSubItem(
+                    text = "Heatmap",
+                    tabName = "heatmap",
+                    icon = shiny::icon("cog")
+                ),
                 text = "iAtlas Modules",
                 icon = shiny::icon("chart-bar"),
                 startExpanded = TRUE
@@ -37,6 +42,12 @@ shinydashboard::dashboardPage(
                 tab_name = "barplot",
                 example_module_ids = c("example_1", "example_2"),
                 example_names = c("Example1", "Example2")
+            ),
+            module_ui(
+                id = "heatmap",
+                tab_name = "heatmap",
+                example_module_ids = c("example_1"),
+                example_names = c("Example1")
             )
         )
     )
