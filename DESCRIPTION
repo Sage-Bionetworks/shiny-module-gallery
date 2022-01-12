@@ -36,3 +36,7 @@ BugReports: https://github.com/CRI-iAtlas/iatlas.modules/issues
 Remotes:
     CRI-iAtlas/iatlas.api.client@main,
     CRI-iAtlas/iatlas.modules@master
+Suggests: 
+    devtools, 
+    testthat (>= 3.0),
+    usethis
