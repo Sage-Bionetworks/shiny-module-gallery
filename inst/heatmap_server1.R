@@ -1,68 +1,106 @@
 iatlas.modules::heatmap_server(
   "heatmap1",
-  feature_classes = shiny::reactive(c("Length", "Width")),
-  response_features = shiny::reactive(
-    c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")
-  ),
 
-  feature_data_function = shiny::reactive(
+  feature_sample_data_function = shiny::reactive(
     function(.feature_class){
-      print(.feature_class)
       iris %>%
         dplyr::as_tibble() %>%
-        dplyr::mutate("sample_name" = as.character(1:dplyr::n())) %>%
+        dplyr::rename("group_name" = .data$Species) %>%
+        dplyr::mutate(
+          "sample_name"  = as.character(1:dplyr::n()),
+          "group_name"   = as.character(.data$group_name),
+          "dataset_name" = "Iris"
+        ) %>%
         tidyr::pivot_longer(
-          !c("Species", "sample_name"),
+          !c("group_name", "sample_name", "dataset_name"),
           names_to = "feature_name",
           values_to = "feature_value"
-        ) %>%
-        dplyr::rename("group_name" = "Species") %>%
-        dplyr::inner_join(
-          dplyr::tribble(
-            ~group_name,  ~group_color,
-            "setosa",     "#FF0000",
-            "versicolor", "#0000FF",
-            "virginica",  "#FFFF00"
-          ),
-          by = "group_name"
         ) %>%
         dplyr::mutate(
-          "group_description" = stringr::str_c("Iris Species: ", .data$group_name),
-          "feature_display" = .data$feature_name
-        ) %>%
-        dplyr::inner_join(
-          dplyr::tribble(
-            ~feature_class, ~feature_name,   ~feature_order,
-            "Length",       "Sepal.Length",  1,
-            "Width",        "Sepal.Width",   2,
-            "Length",       "Petal.Length",  3,
-            "Width",        "Petal.Width",   4
-          ),
-          by = "feature_name"
+          "feature_display" = stringr::str_replace(.data$feature_name, "\\.", " "),
+          "feature_class" = stringr::str_extract(.data$feature_name, "([[:alpha:]]+)"),
         ) %>%
         dplyr::filter(.data$feature_class == .feature_class) %>%
-        dplyr::select("sample_name", "feature_name", "feature_display", "feature_value", "feature_order", "group_name", "group_color", "group_description") %>%
-        print()
+        dplyr::select(
+          "group_name", "sample_name", "feature_name", "feature_value", "dataset_name"
+        )
     }
   ),
 
-  response_data_function = shiny::reactive(
+  response_sample_data_function = shiny::reactive(
     function(.feature){
-      print(.feature)
       iris %>%
         dplyr::as_tibble() %>%
-        dplyr::mutate("sample_name" = as.character(1:dplyr::n())) %>%
+        dplyr::rename("group_name" = .data$Species) %>%
+        dplyr::mutate(
+          "sample_name" = as.character(1:dplyr::n()),
+          "group_name" = as.character(.data$group_name),
+        ) %>%
         tidyr::pivot_longer(
-          !c("Species", "sample_name"),
+          !c("group_name", "sample_name"),
           names_to = "feature_name",
           values_to = "feature_value"
         ) %>%
-        dplyr::mutate("feature_display" = .data$feature_name) %>%
+        dplyr::mutate(
+          "feature_display" = stringr::str_replace(.data$feature_name, "\\.", " "),
+          "feature_class" = stringr::str_extract(.data$feature_name, "([[:alpha:]]+)"),
+        ) %>%
         dplyr::filter(.data$feature_name == .feature) %>%
-        dplyr::select("sample_name", "feature_name", "feature_display", "feature_value") %>%
-        print()
+        dplyr::select(
+          "sample_name", "feature_name", "feature_value"
+        )
     }
   ),
 
+  feature_data = shiny::reactive(
+    iris %>%
+      dplyr::as_tibble() %>%
+      dplyr::mutate("sample_name" = as.character(1:dplyr::n())) %>%
+      tidyr::pivot_longer(
+        !c("Species", "sample_name"),
+        names_to = "feature_name",
+        values_to = "feature_value"
+      ) %>%
+      dplyr::select("feature_name") %>%
+      dplyr::distinct() %>%
+      dplyr::mutate(
+        "feature_display" = stringr::str_replace(.data$feature_name, "\\.", " "),
+        "feature_class" = stringr::str_extract(.data$feature_name, "([[:alpha:]]+)"),
+        "feature_order" = NA
+      )
+  ),
+
+  response_data = shiny::reactive(
+    iris %>%
+      dplyr::as_tibble() %>%
+      dplyr::mutate("sample_name" = as.character(1:dplyr::n())) %>%
+      tidyr::pivot_longer(
+        !c("Species", "sample_name"),
+        names_to = "feature_name",
+        values_to = "feature_value"
+      ) %>%
+      dplyr::select("feature_name") %>%
+      dplyr::distinct() %>%
+      dplyr::mutate(
+        "feature_display" = stringr::str_replace(.data$feature_name, "\\.", " "),
+        "feature_class" = stringr::str_extract(.data$feature_name, "([[:alpha:]]+)")
+      )
+  ),
+  group_data = shiny::reactive(
+    iris %>%
+      dplyr::as_tibble() %>%
+      dplyr::select("group_name" = "Species") %>%
+      dplyr::distinct() %>%
+      dplyr::mutate(
+        "group_name" = as.character(.data$group_name),
+        "group_display" = stringr::str_to_title(.data$group_name),
+        "group_description" = stringr::str_c("Iris Species: ", .data$group_name),
+        "group_color" = NA
+      )
+  ),
+  summarise_function_list = shiny::reactive(
+    purrr::partial(stats::cor, method = "pearson")
+  ),
   drilldown = shiny::reactive(T)
 )
+

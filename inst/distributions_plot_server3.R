@@ -1,17 +1,18 @@
-iatlas.modules::barplot_server(
-  "barplot2",
+iatlas.modules::distributions_plot_server(
+  "distplot3",
 
   sample_data_function = shiny::reactive(
-    function(.feature_class){
+    function(.feature){
       iris %>%
         dplyr::as_tibble() %>%
         dplyr::rename("group_name" = .data$Species) %>%
         dplyr::mutate(
           "sample_name" = as.character(1:dplyr::n()),
-          "group_name"   = as.character(.data$group_name),
+          "group_name" = as.character(.data$group_name),
+          "dataset_name" = "Iris"
         ) %>%
         tidyr::pivot_longer(
-          !c("group_name", "sample_name"),
+          !c("group_name", "sample_name", "dataset_name"),
           names_to = "feature_name",
           values_to = "feature_value"
         ) %>%
@@ -19,9 +20,9 @@ iatlas.modules::barplot_server(
           "feature_display" = stringr::str_replace(.data$feature_name, "\\.", " "),
           "feature_class" = stringr::str_extract(.data$feature_name, "([[:alpha:]]+)"),
         ) %>%
-        dplyr::filter(.data$feature_class == .feature_class) %>%
+        dplyr::filter(.data$feature_name == .feature) %>%
         dplyr::select(
-          "group_name", "sample_name", "feature_name", "feature_value"
+          "group_name", "sample_name", "feature_name", "feature_value", "dataset_name"
         )
     }
   ),
@@ -39,7 +40,8 @@ iatlas.modules::barplot_server(
       dplyr::distinct() %>%
       dplyr::mutate(
         "feature_display" = stringr::str_replace(.data$feature_name, "\\.", " "),
-        "feature_class" = stringr::str_extract(.data$feature_name, "([[:alpha:]]+)"),
+        "Class1" = stringr::str_extract(.data$feature_name, "^[[:alpha:]]+"),
+        "Class2" = stringr::str_extract(.data$feature_name, "[[:alpha:]]+$"),
       )
   ),
 
@@ -56,7 +58,5 @@ iatlas.modules::barplot_server(
   ),
 
   drilldown = shiny::reactive(T),
-  barplot_xlab = shiny::reactive("Species"),
-  barplot_ylab = shiny::reactive("Height")
+  distplot_xlab = shiny::reactive("Species")
 )
-
