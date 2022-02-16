@@ -11,7 +11,7 @@ module_ui <- function(id, tab_name, example_module_ids, example_names){
         solidHeader = TRUE,
         status = "primary",
         collapsible = TRUE,
-        width = 12,
+        width = 12
       ),
     ),
     shiny::fluidRow(
@@ -21,7 +21,7 @@ module_ui <- function(id, tab_name, example_module_ids, example_names){
         solidHeader = TRUE,
         status = "primary",
         collapsible = TRUE,
-        width = 12,
+        width = 12
       )
     ),
     purrr::map2(example_module_ids, example_names, ~example_ui(ns(.x), .y))
