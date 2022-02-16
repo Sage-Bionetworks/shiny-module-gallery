@@ -1,6 +1,8 @@
 shinydashboard::dashboardPage(
     shinydashboard::dashboardHeader(),
     shinydashboard::dashboardSidebar(
+        # This extends the light blue color of the body all the way down the page.
+        tags$head(tags$style(HTML('.content-wrapper { overflow: auto; }'))),
         shinydashboard::sidebarMenu(
             shinydashboard::menuItem(
                 shinydashboard::menuSubItem(
