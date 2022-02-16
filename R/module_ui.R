@@ -10,18 +10,14 @@ module_ui <- function(id, tab_name, example_module_ids, example_names){
         title = "Server Documentation",
         solidHeader = TRUE,
         status = "primary",
-        collapsible = TRUE,
-        width = 12
-      )
-    ),
-    shiny::fluidRow(
+        collapsible = TRUE
+      ),
       shinydashboard::box(
         shiny::htmlOutput(ns("text2")),
         title = "UI Documentation",
         solidHeader = TRUE,
         status = "primary",
-        collapsible = TRUE,
-        width = 12
+        collapsible = TRUE
       )
     ),
     purrr::map2(example_module_ids, example_names, ~example_ui(ns(.x), .y))
