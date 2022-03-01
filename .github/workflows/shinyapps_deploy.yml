@@ -6,10 +6,13 @@ name: shiny-deploy
 on:
   pull_request:
     branches:
+      - main
       - staging
   push:
     branches:
       - main
+      - staging
+
 
 jobs:
   shiny-deploy:
