@@ -66,7 +66,7 @@ jobs:
             token  = "${{ secrets.RSCONNECT_TOKEN }}",
             secret = "${{ secrets.RSCONNECT_SECRET }}"
           )
-          rsconnect::deployApp(appName = appName)
+          rsconnect::deployApp(appName = app_name)
         shell: Rscript {0}
 
 
