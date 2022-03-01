@@ -39,4 +39,5 @@ Remotes:
 Suggests: 
     devtools, 
     testthat (>= 3.0),
-    usethis
+    usethis,
+    rsconnect
