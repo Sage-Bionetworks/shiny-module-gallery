@@ -4,10 +4,12 @@
 name: shiny-deploy
 
 on:
+  pull_request:
+    branches:
+      - staging
   push:
     branches:
       - main
-      - staging
 
 jobs:
   shiny-deploy:
