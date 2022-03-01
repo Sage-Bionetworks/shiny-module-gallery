@@ -22,6 +22,7 @@ Imports:
     plotly (>= 4.0),
     purrr,
     readr (>= 1.0),
+    reticultate,
     rlang (>= 0.4),
     shiny (>= 1.6),
     shinydashboard (>= 0.7),
