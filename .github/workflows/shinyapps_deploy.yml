@@ -42,7 +42,7 @@ jobs:
           reticulate::py_install(c('pandas', 'numpy', 'boto3', 'synapseclient'), pip = TRUE)
         shell: Rscript {0}
 
-            - name: Authorize and deploy app
+      - name: Authorize and deploy app
         run: |
           branch   <- Sys.getenv("GITHUB_REF_NAME")
           print(branch)
