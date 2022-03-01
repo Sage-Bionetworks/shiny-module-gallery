@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.PAT }}
+      SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
     steps:
       - name: Install libcurl
         run: sudo apt-get install -y libcurl4-openssl-dev
@@ -42,22 +43,29 @@ jobs:
           reticulate::py_install(c('pandas', 'numpy', 'boto3', 'synapseclient'), pip = TRUE)
         shell: Rscript {0}
 
+      - name: temp test
+        run: |
+          synapseclient <- reticulate::import("synapseclient", delay_load = TRUE)
+          syn <- synapseclient$Synapse()
+          syn$login()
+
       - name: Authorize and deploy app
         run: |
           branch   <- Sys.getenv("GITHUB_REF_NAME")
           print(branch)
           if (branch == "main"){
             app_name <- "Shiny-Module-Gallery"
-          } else (branch == "staging"){
+          } else {
             app_name <- "Shiny-Module-Gallery-staging"
             #yaml::write_yaml(list("app" = 'staging'),  "app_config.yml")
           }
           print(app_name)
           rsconnect::setAccountInfo(
-            name   = "sagebio"",
+            name   = "sagebio",
             token  = "${{ secrets.RSCONNECT_TOKEN }}",
             secret = "${{ secrets.RSCONNECT_SECRET }}"
           )
-          rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
           rsconnect::deployApp(appName = appName)
         shell: Rscript {0}
+
+
