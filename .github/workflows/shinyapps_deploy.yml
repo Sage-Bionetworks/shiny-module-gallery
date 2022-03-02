@@ -4,10 +4,6 @@
 name: shiny-deploy
 
 on:
-  pull_request:
-    branches:
-      - main
-      - staging
   push:
     branches:
       - main
@@ -41,13 +37,6 @@ jobs:
           reticulate::install_miniconda()
           reticulate::py_discover_config()
           reticulate::py_install(c('pandas', 'numpy', 'boto3', 'synapseclient'), pip = TRUE)
-        shell: Rscript {0}
-
-      - name: temp test
-        run: |
-          synapseclient <- reticulate::import("synapseclient", delay_load = TRUE)
-          syn <- synapseclient$Synapse()
-          syn$login()
         shell: Rscript {0}
 
       - name: Authorize and deploy app
