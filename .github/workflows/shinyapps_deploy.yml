@@ -35,6 +35,16 @@ jobs:
         with:
           cache-version: 2
 
+      - name: Create config
+        run: |
+          print(secrets.SYNAPSE_AUTH_TOKEN)
+          print(list("access_token" = ${{ secrets.SYNAPSE_AUTH_TOKEN }}))
+          yaml::write_yaml(
+            list("access_token" = ${{ secrets.SYNAPSE_AUTH_TOKEN }}),
+            "app_config.yml"
+          )
+        shell: Rscript {0}
+
       - name: Install Miniconda and python packages
         run: |
           reticulate::install_miniconda()
@@ -44,10 +54,6 @@ jobs:
 
       - name: Authorize and deploy app
         run: |
-          yaml::write_yaml(
-            list("access_token" = Sys.getenv(SYNAPSE_AUTH_TOKEN)),
-            "app_config.yml"
-          )
           branch <- Sys.getenv("GITHUB_REF_NAME")
           if (branch == "main"){
             app_name <- "Shiny-Module-Gallery"
