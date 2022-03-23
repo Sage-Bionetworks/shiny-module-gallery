@@ -1,4 +1,4 @@
-data <- projectlive.modules::synapse_module_server(
+data <- projectliveModules::synapse_module_server(
   id = "synapse_module1",
   syn = syn,
   config = shiny::reactive(
