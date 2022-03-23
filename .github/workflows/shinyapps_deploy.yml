@@ -37,7 +37,7 @@ jobs:
 
       - name: Create config
         run: |
-          print(secrets.SYNAPSE_AUTH_TOKEN)
+          print(${{ secrets.SYNAPSE_AUTH_TOKEN }})
           print(list("access_token" = ${{ secrets.SYNAPSE_AUTH_TOKEN }}))
           yaml::write_yaml(
             list("access_token" = ${{ secrets.SYNAPSE_AUTH_TOKEN }}),
