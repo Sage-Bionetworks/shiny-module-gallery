@@ -37,11 +37,11 @@ jobs:
 
       - name: Create config
         run: |
-          print(${{ secrets.SYNAPSE_AUTH_TOKEN }})
-          print(list("access_token" = ${{ secrets.SYNAPSE_AUTH_TOKEN }}))
           yaml::write_yaml(
-            list("access_token" = ${{ secrets.SYNAPSE_AUTH_TOKEN }}),
-            "app_config.yml"
+            x = list(
+              "access_token" = ${{secrets.SYNAPSE_AUTH_TOKEN}}
+            ),
+            file = "app_config.yml"
           )
         shell: Rscript {0}
 
