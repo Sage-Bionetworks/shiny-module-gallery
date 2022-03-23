@@ -39,7 +39,7 @@ jobs:
         run: |
           yaml::write_yaml(
             x = list(
-              "access_token" = ${{secrets.SYNAPSE_AUTH_TOKEN}}
+              "access_token" = "${{secrets.SYNAPSE_AUTH_TOKEN}}"
             ),
             file = "app_config.yml"
           )
