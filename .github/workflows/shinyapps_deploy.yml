@@ -45,7 +45,7 @@ jobs:
       - name: Authorize and deploy app
         run: |
           yaml::write_yaml(
-            list("access_token" = SYNAPSE_AUTH_TOKEN),
+            list("access_token" = Sys.getenv(SYNAPSE_AUTH_TOKEN)),
             "app_config.yml"
           )
           branch <- Sys.getenv("GITHUB_REF_NAME")
