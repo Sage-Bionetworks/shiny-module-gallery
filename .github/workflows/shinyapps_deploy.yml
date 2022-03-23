@@ -53,7 +53,6 @@ jobs:
             app_name <- "Shiny-Module-Gallery-testing"
           }
           print(app_name)
-          print(yaml::read_yaml("app_config.yml"))
           rsconnect::setAccountInfo(
             name   = "sagebio",
             token  = "${{ secrets.RSCONNECT_TOKEN }}",
