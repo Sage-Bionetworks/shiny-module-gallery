@@ -44,6 +44,10 @@ jobs:
 
       - name: Authorize and deploy app
         run: |
+          yaml::write_yaml(
+            list("access_token" = ${{ secrets.SYNAPSE_AUTH_TOKEN }}),
+            "app_config.yml"
+          )
           branch <- Sys.getenv("GITHUB_REF_NAME")
           if (branch == "main"){
             app_name <- "Shiny-Module-Gallery"

@@ -1,9 +1,12 @@
 
 function(input, output) {
 
+  config_list <- yaml::read_yaml("app_config.yml")
+
   synapseclient <- reticulate::import("synapseclient", delay_load = TRUE)
   syn <- synapseclient$Synapse()
-  syn$login()
+  access_token <- config_list$access_token
+  syn$login(authToken = access_token)
 
   library(magrittr)
 
