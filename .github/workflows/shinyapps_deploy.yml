@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.PAT }}
+      SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
     steps:
       - name: Install libcurl
         run: sudo apt-get install -y libcurl4-openssl-dev
@@ -30,10 +31,15 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-renv@v1
+      - uses: r-lib/actions/setup-renv@v2
+        with:
+          cache-version: 2
 
-      - name: Install rsconnect
-        run: install.packages("rsconnect")
+      - name: Install Miniconda and python packages
+        run: |
+          reticulate::install_miniconda()
+          reticulate::py_discover_config()
+          reticulate::py_install(c('pandas', 'numpy', 'boto3', 'synapseclient'), pip = TRUE)
         shell: Rscript {0}
 
       - name: Authorize and deploy app
@@ -49,18 +55,12 @@ jobs:
           print(app_name)
           print(yaml::read_yaml("app_config.yml"))
           rsconnect::setAccountInfo(
-            name   = "${{ secrets.RSCONNECT_USER }}",
+            name   = "sagebio",
             token  = "${{ secrets.RSCONNECT_TOKEN }}",
             secret = "${{ secrets.RSCONNECT_SECRET }}"
           )
           rsconnect::deployApp(appName = app_name)
 
-          #branch<-Sys.getenv("GITHUB_REF_NAME")
-          #repo<-Sys.getenv("GITHUB_REPOSITORY")
-          #appName<-gsub("\\.", "-", strsplit(repo, "/")[[1]][2])
-          #if (!startsWith(branch, "release")) {
-          #   appName = paste(appName, "staging", sep="-")
-          #}
-          #rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
-          #rsconnect::deployApp(appName = appName)
         shell: Rscript {0}
+
+
