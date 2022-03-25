@@ -4,6 +4,9 @@
 name: shiny-deploy
 
 on:
+  pull_request:
+    branches:
+      - staging
   push:
     branches:
       - main
@@ -41,13 +44,13 @@ jobs:
 
       - name: Authorize and deploy app
         run: |
-          branch   <- Sys.getenv("GITHUB_REF_NAME")
-          print(branch)
+          branch <- Sys.getenv("GITHUB_REF_NAME")
           if (branch == "main"){
             app_name <- "Shiny-Module-Gallery"
-          } else {
+          } else if (branch == "staging"){
             app_name <- "Shiny-Module-Gallery-staging"
-            #yaml::write_yaml(list("app" = 'staging'),  "app_config.yml")
+          } else {
+            app_name <- "Shiny-Module-Gallery-testing"
           }
           print(app_name)
           rsconnect::setAccountInfo(
@@ -56,6 +59,7 @@ jobs:
             secret = "${{ secrets.RSCONNECT_SECRET }}"
           )
           rsconnect::deployApp(appName = app_name)
+
         shell: Rscript {0}
 
 

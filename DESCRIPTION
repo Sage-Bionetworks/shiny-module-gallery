@@ -20,7 +20,7 @@ Imports:
     magrittr (>= 2.0),
     markdown (>= 1.0),
     plotly (>= 4.0),
-    projectlive.modules,
+    projectliveModules,
     purrr,
     readr (>= 1.0),
     reticulate,
@@ -35,9 +35,8 @@ Imports:
 URL: https://github.com/CRI-iAtlas/iatlas.modules
 BugReports: https://github.com/CRI-iAtlas/iatlas.modules/issues
 Remotes:
-    CRI-iAtlas/iatlas.api.client@main,
     CRI-iAtlas/iatlas.modules@master,
-    Sage-Bionetworks/projectlive-modules
+    Sage-Bionetworks/projectliveModules@main
 Suggests: 
     devtools, 
     testthat (>= 3.0),
