@@ -52,6 +52,15 @@ jobs:
           reticulate::py_install(c('pandas', 'numpy', 'boto3', 'synapseclient'), pip = TRUE)
         shell: Rscript {0}
 
+      - name: Test config
+        run: |
+          config_list <- yaml::read_yaml("app_config.yml")
+          synapseclient <- reticulate::import("synapseclient", delay_load = TRUE)
+          syn <- synapseclient$Synapse()
+          access_token <- config_list$access_token
+          syn$login(authToken = access_token)
+        shell: Rscript {0}
+
       - name: Authorize and deploy app
         run: |
           branch <- Sys.getenv("GITHUB_REF_NAME")
