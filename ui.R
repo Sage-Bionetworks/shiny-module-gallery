@@ -89,15 +89,15 @@ shinydashboard::dashboardPage(
         tab_name = "heatmap2",
         example_module_ids = c("example_1"),
         example_names = c("Example1")
-      )
+      ),
 
       # projecltive modules ----
-      # module_ui(
-      #   id = "projectlive_synapse_module",
-      #   tab_name = "projectlive_synapse_module",
-      #   example_module_ids = c("example_1"),
-      #   example_names = c("Example1")
-      # )
+      module_ui(
+        id = "projectlive_synapse_module",
+        tab_name = "projectlive_synapse_module",
+        example_module_ids = c("example_1"),
+        example_names = c("Example1")
+      )
 
     )
   )

@@ -1,9 +1,12 @@
 
 function(input, output) {
 
-  # synapseclient <- reticulate::import("synapseclient", delay_load = TRUE)
-  # syn <- synapseclient$Synapse()
-  # syn$login()
+  config_list <- yaml::read_yaml("app_config.yml")
+
+  synapseclient <- reticulate::import("synapseclient", delay_load = TRUE)
+  syn <- synapseclient$Synapse()
+  access_token <- config_list$access_token
+  syn$login(authToken = access_token)
 
   library(magrittr)
 
@@ -98,17 +101,17 @@ function(input, output) {
 
   # projectlive modules ----
 
-  # module_server(
-  #   id = "projectlive_synapse_module",
-  #   server_function_name = "synapse_module_server",
-  #   ui_function_name = "synapse_module_ui",
-  #   example_module_ids = c("example_1"),
-  #   example_server_files = c(
-  #     "inst/projectlive_examples/synapse_module_server_1.R"
-  #   ),
-  #   example_ui_files = c(
-  #     "inst/projectlive_examples/synapse_module_ui_1.R"
-  #   )
-  # )
+  module_server(
+    id = "projectlive_synapse_module",
+    server_function_name = "synapse_module_server",
+    ui_function_name = "synapse_module_ui",
+    example_module_ids = c("example_1"),
+    example_server_files = c(
+      "inst/projectlive_examples/synapse_module_server_1.R"
+    ),
+    example_ui_files = c(
+      "inst/projectlive_examples/synapse_module_ui_1.R"
+    )
+  )
 
 }

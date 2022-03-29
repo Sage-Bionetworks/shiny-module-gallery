@@ -19,6 +19,8 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.PAT }}
       SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
+      VENV_NAME: virtual_env
+
     steps:
       - name: Install libcurl
         run: sudo apt-get install -y libcurl4-openssl-dev
@@ -35,12 +37,33 @@ jobs:
         with:
           cache-version: 2
 
-      - name: Install Miniconda and python packages
+      - name: Install System Dependencies
         run: |
-          reticulate::install_miniconda()
-          reticulate::py_discover_config()
-          reticulate::py_install(c('pandas', 'numpy', 'boto3', 'synapseclient'), pip = TRUE)
+          sudo apt-get update
+          sudo apt-get install -y pip python3.8-venv libcurl4-openssl-dev
+
+      - name: Create config
+        run: |
+          yaml::write_yaml(
+            x = list(
+              "access_token" = "${{secrets.SYNAPSE_AUTH_TOKEN}}"
+            ),
+            file = "app_config.yml"
+          )
         shell: Rscript {0}
+
+      - name: Create and Activate Python Virtual Environment
+        shell: bash
+        run: |
+          python3 -m venv "${{ env.VENV_NAME }}"
+          chmod 755 "${{ env.VENV_NAME }}"/bin/activate
+          source "${{ env.VENV_NAME }}"/bin/activate
+
+      - name: Install Python Dependencies
+        shell: bash
+        run: |
+          source "${{ env.VENV_NAME }}"/bin/activate
+          pip3 install synapseclient
 
       - name: Authorize and deploy app
         run: |
