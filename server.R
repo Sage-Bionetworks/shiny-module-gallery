@@ -1,5 +1,8 @@
+message("server test1")
+
 
 function(input, output) {
+  message("server test2")
 
   config_list <- yaml::read_yaml("app_config.yml")
 
