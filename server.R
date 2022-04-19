@@ -114,4 +114,17 @@ function(input, output) {
     )
   )
 
+  module_server(
+    id = "projectlive_summary_snapshot_module",
+    server_function_name = "summary_snapshot_module_server",
+    ui_function_name = "summary_snapshot_module_ui",
+    example_module_ids = c("example_1"),
+    example_server_files = c(
+      "inst/projectlive_examples/summary_snapshot_module_server_1.R"
+    ),
+    example_ui_files = c(
+      "inst/projectlive_examples/summary_snapshot_module_ui_1.R"
+    )
+  )
+
 }
