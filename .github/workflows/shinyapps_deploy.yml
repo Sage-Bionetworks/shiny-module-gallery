@@ -21,6 +21,8 @@ jobs:
       SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
       VENV_NAME: virtual_env
 
+    steps:
+
       - name: Install System Dependencies
         run: |
           sudo apt-get update
