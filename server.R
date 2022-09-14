@@ -10,9 +10,6 @@ function(input, output) {
 
   library(magrittr)
 
-
-  # iatlas modules ----
-
   module_server(
     id = "barplot",
     server_function_name = "barplot_server",
@@ -96,34 +93,6 @@ function(input, output) {
     ),
     example_ui_files = c(
       "inst/iatlas_examples/heatmap_ui2_1.R"
-    )
-  )
-
-  # projectlive modules ----
-
-  module_server(
-    id = "projectlive_synapse_module",
-    server_function_name = "synapse_module_server",
-    ui_function_name = "synapse_module_ui",
-    example_module_ids = c("example_1"),
-    example_server_files = c(
-      "inst/projectlive_examples/synapse_module_server_1.R"
-    ),
-    example_ui_files = c(
-      "inst/projectlive_examples/synapse_module_ui_1.R"
-    )
-  )
-
-  module_server(
-    id = "projectlive_summary_snapshot_module",
-    server_function_name = "summary_snapshot_module_server",
-    ui_function_name = "summary_snapshot_module_ui",
-    example_module_ids = c("example_1"),
-    example_server_files = c(
-      "inst/projectlive_examples/summary_snapshot_module_server_1.R"
-    ),
-    example_ui_files = c(
-      "inst/projectlive_examples/summary_snapshot_module_ui_1.R"
     )
   )
 

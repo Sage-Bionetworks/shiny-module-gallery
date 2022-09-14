@@ -37,28 +37,11 @@ shinydashboard::dashboardPage(
         text = "iAtlas Modules",
         icon = shiny::icon("chart-bar"),
         startExpanded = TRUE
-      ),
-
-      shinydashboard::menuItem(
-        shinydashboard::menuSubItem(
-          text = "Synapse Module",
-          tabName = "projectlive_synapse_module",
-          icon = shiny::icon("cog")
-        ),
-        shinydashboard::menuSubItem(
-          text = "Summary Snapshot Module",
-          tabName = "projectlive_summary_snapshot_module",
-          icon = shiny::icon("cog")
-        ),
-        text = "Project Live Modules",
-        icon = shiny::icon("chart-bar"),
-        startExpanded = TRUE
       )
     )
   ),
   shinydashboard::dashboardBody(
     shinydashboard::tabItems(
-      # iatlas modules ----
       module_ui(
         id = "barplot",
         tab_name = "barplot",
@@ -94,22 +77,7 @@ shinydashboard::dashboardPage(
         tab_name = "heatmap2",
         example_module_ids = c("example_1"),
         example_names = c("Example1")
-      ),
-
-      # projecltive modules ----
-      module_ui(
-        id = "projectlive_synapse_module",
-        tab_name = "projectlive_synapse_module",
-        example_module_ids = c("example_1"),
-        example_names = c("Example1")
-      ),
-      module_ui(
-        id = "projectlive_summary_snapshot_module",
-        tab_name = "projectlive_summary_snapshot_module",
-        example_module_ids = c("example_1"),
-        example_names = c("Example1")
       )
-
     )
   )
 )
